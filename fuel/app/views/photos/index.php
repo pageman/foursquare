@@ -74,6 +74,9 @@
   <!-- include jQuery -->
  
   <script type='text/javascript'>
+	  $('body')
+		  .on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); })
+		  .on('touchstart.dropdown', '.dropdown-submenu', function (e) { e.preventDefault(); });
   var lat;
   var lng;
   
