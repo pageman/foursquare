@@ -13,31 +13,45 @@
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- CSS Reset -->
-  <link rel="stylesheet" href="css/reset.css">
-  
-  <!-- Styling for your grid blocks -->
-  <link rel="stylesheet" href="css/style.css">
+ <?php 
 
+ echo \Fuel\Core\Asset::js('jquery-1.7.1.min.js');
+ echo \Fuel\Core\Asset::js('jquery.wookmark.js');
+// echo \Fuel\Core\Asset::css('ratchet.css'); 
+ //echo \Fuel\Core\Asset::css('reset.css');
+ echo \Fuel\Core\Asset::css('style.css');
+ echo \Fuel\Core\Asset::css('bootstrap.min.css');
+
+  ?>
+  
 </head>
 
 <body>
 
-  <div id="container">
-    <header>
-    </header>
-    <div class="content" role="main">
-	<div>
-		<form>
-
-			<input type="text" placeholder="Full name" style='width:80%;'>
-			<a class="button-main" value='Search' style='height:30px'>Search</a>
-
-		</form>
+		<div id="container">
+		<div class="content" role="main">
+		<div>
 		
-		<?php 
+		<?php
 		
 		?>
+		<div class="btn-toolbar" style="margin:0;">
+              <div class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+					<ul class="dropdown-menu" id="venueList">
+					<!-- li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li -->
+					<li></li>
+					<!-- <li class="divider"></li>-->
+					<!-- <li><a href="#">Separated link</a></li>-->
+					</ul>
+				<!--<a class="btn btn-primary" value='Search' style='height:20px;'>Search</a>-->
+              </div><!-- /btn-group -->
+			  
+			
+		</div>
+			<!--<input type="text" placeholder="location" style='width:80%;' id='tags'>-->
+			
 		
 	</div>
       <ul id="tiles">
@@ -56,14 +70,56 @@
   </div>
 
   <!-- include jQuery -->
-  <?php echo \Fuel\Core\Asset::js('jquery-1.7.1.min.js');
- echo \Fuel\Core\Asset::js('jquery.wookmark.js');
- echo \Fuel\Core\Asset::css('reset.css');
- echo \Fuel\Core\Asset::css('style.css');
- echo \Fuel\Core\Asset::css('ratchet.css');
-
-  ?>
-
+ 
+  <script type='text/javascript'>
+  var lat;
+  var lng;
+  
+  // get lat,lng using HTML5 GeoLocation API
+  $(document).ready(function(){
+	
+	
+	if (navigator.geolocation)
+	{
+		navigator.geolocation.getCurrentPosition(showPosition);
+	}
+	else
+	{
+		x.innerHTML="Geolocation is not supported by this browser.";
+	}
+	
+	function showPosition(position)
+	{
+		lat = position.coords.latitude
+		lng = position.coords.longitude
+		
+		$.ajax({
+			type: "POST",
+			data: "latitude="+lat+"&longitude="+lng,
+			url: "/ajax/venues/recomends",
+			success: function(data){
+				console.log(data);
+				
+				// encode to JS object
+				venue =	JSON.parse(data)
+				//console.log(venue)
+				
+				// put JS object to Dropdown list
+				for(var i in venue){
+					
+					$('#venueList').append('<li><a href="#	">'+venue[i].name+'</a></li>');
+				}
+				
+			}
+		
+		});
+		
+	}
+	
+  });
+  
+		
+  </script>
   
   <!-- Once the page is loaded, initalize the plug-in. -->
   <script type="text/javascript">
@@ -163,5 +219,58 @@
     });
   </script>
   
+  <?php /* ?>
+   <script>
+    $(function() {
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+        $("#tags").autocomplete({
+            source: availableTags
+        });
+    });
+    </script>
+    <?php */ ?>
+	
+   <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+    <script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+	
+	
+    <!-- script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets/js/application.js"></script -->
 </body>
 </html>
