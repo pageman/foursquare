@@ -16,13 +16,16 @@ class Controller_Ajax_Venues extends \Fuel\Core\Controller {
         $lat    = Fuel\Core\Input::post('lat');
         $long   = Fuel\Core\Input::post('lng');
         $location = "$lat,$long";
-        
+            
         return json_encode(sq4hack\sq4hack::puke_recommends($location));
     }
     
     public function action_photos(){
-        $id = Fuel\Core\Input::post('id');
-        return json_encode(sq4hack\sq4hack::puke_group_photos($id));
+        $id     = Fuel\Core\Input::post('id');
+        $limit  = Fuel\Core\Input::post('limit');
+        $offset = Fuel\Core\Input::post('offset');
+        
+        return json_encode(sq4hack\sq4hack::puke_group_photos($id,$limit,$offset));
     }
 }
 

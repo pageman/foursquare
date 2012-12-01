@@ -13,29 +13,34 @@ class sq4hack {
     private static $instance;
     private static $config;
     private static $url  = 'https://api.foursquare.com/v2/';
-    private static $auth; 
+    private static $auth;
+    private static $oauth;
     
-    public static function puke_checkin_details () {
-        
-    }
+
     
-    public static function puke_group_photos($id){
-        $places_photos      = self::puke_venue_photos($id);
+    public static function puke_group_photos($id,$limit,$offset){
+        $places_photos      = self::puke_venue_photos($id,$limit,$offset);
         $places             = json_decode($places_photos);
         $photos             = $places->response->photos->items;
         $photos_filtered    = array();
         $c                  = 0;
         
         foreach ($photos as $photo):
-            $photos_filtered[$c]['url'] = 'https://is1.4sqi.net/pix/'.$photo->suffix;
+            $photos_filtered[$c]['url']         = 'https://is1.4sqi.net/pix/'.$photo->suffix;
+            $photos_filtered[$c]['height']      = $photo->height;
+            $photos_filtered[$c]['width']       = $photo->width;
+            $photos_filtered[$c]['firstName']   = trim($photo->user->firstName);
+            $photos_filtered[$c]['avatar']      = 'https://is1.4sqi.net/user/'.$photo->user->photo->suffix;
+            $photos_filtered[$c]['id']          = $photo->user->id;  
             $c++;
         endforeach;
         return $photos_filtered;
     }
     
-    public static function puke_venue_photos($id) {
+    public static function puke_venue_photos($id,$limit,$offset) {
         self::load_auth();
-        $uri = self::$url . 'venues/'.$id.'/photos'.self::$auth.'group=venue';
+        $page   = "&limit=$limit&offset=$offset";
+        $uri    = self::$url . 'venues/'.$id.'/photos'.self::$auth.'group=venue'.$page;
         return self::rest_gen($uri);
     }
     
@@ -57,6 +62,15 @@ class sq4hack {
         self::load_auth();
         $uri = self::$url . 'venues/explore' . self::$auth . "ll=$near";
         return self::rest_gen($uri);
+    }
+    
+    private static function oauth_token_url() {
+        $token = \Fuel\Core\Session::get('token');
+        if(!is_null($token)):
+            self::$oauth = "?oauth_token=$token";
+        else:
+            return null;
+        endif;
     }
     
     private static function rest_gen ($uri) {        
