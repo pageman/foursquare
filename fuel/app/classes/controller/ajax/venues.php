@@ -13,12 +13,16 @@
 class Controller_Ajax_Venues extends \Fuel\Core\Controller {
 
     public function action_recomends(){
-        return json_encode(sq4hack\sq4hack::puke_recommends('14.5583092,121.0185147'));
+        $lat    = Fuel\Core\Input::post('lang');
+        $long   = Fuel\Core\Fuel::post('long');
+        $location = "$lat,$long";
+        
+        return json_encode(sq4hack\sq4hack::puke_recommends($location));
     }
     
     public function action_photos(){
-        return json_encode(sq4hack\sq4hack::puke_group_photos('4fda95dde4b036cbf8a92501'));
-        //return sq4hack\sq4hack::puke_group_photos('4fda95dde4b036cbf8a92501');
+        $id = Fuel\Core\Input::post('id');
+        return json_encode(sq4hack\sq4hack::puke_group_photos($id));
     }
 }
 
