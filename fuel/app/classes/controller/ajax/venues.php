@@ -13,8 +13,8 @@
 class Controller_Ajax_Venues extends \Fuel\Core\Controller {
 
     public function action_recomends(){
-        $lat    = Fuel\Core\Input::post('lang');
-        $long   = Fuel\Core\Fuel::post('long');
+        $lat    = Fuel\Core\Input::post('lat');
+        $long   = Fuel\Core\Input::post('lng');
         $location = "$lat,$long";
         
         return json_encode(sq4hack\sq4hack::puke_recommends($location));
