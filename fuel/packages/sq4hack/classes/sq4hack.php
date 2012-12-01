@@ -18,7 +18,7 @@ class sq4hack {
     
 
     
-    public static function puke_group_photos($id,$limit,$offset){
+    public static function puke_group_photos($id,$limit = 100 ,$offset = 0){
         $places_photos      = self::puke_venue_photos($id,$limit,$offset);
         $places             = json_decode($places_photos);
         $photos             = $places->response->photos->items;

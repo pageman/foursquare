@@ -1,5 +1,5 @@
 <?php 
-    $photos = sq4hack\sq4hack::puke_group_photos('43695300f964a5208c291fe3',1,0);
+    $photos = sq4hack\sq4hack::puke_group_photos('43695300f964a5208c291fe3');
 ?>
 <pre>
     <?php 
