@@ -21,6 +21,7 @@ return array(
         'packages' => array(
             'auth',
             'orm',
+            'sq4hack'
         ),
     ),
 );
