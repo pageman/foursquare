@@ -10,7 +10,6 @@ include('eden.php');
 include('FoursquareAPI.class.php');
 
 class sq4hack {
-    private static $instance;
     private static $config;
     private static $url  = 'https://api.foursquare.com/v2/';
     private static $auth;
