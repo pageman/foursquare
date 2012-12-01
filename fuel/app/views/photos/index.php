@@ -143,8 +143,11 @@ console.log(photos[i].name)
 				
 				// put JS object to Dropdown list
 				for(var i in venue){
-					$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
-			
+					$('#venueList').append('<li><a href="javascript:void()" id="'+venue[i].id+'">'+venue[i].name+'</a></li>');
+
+					$('#'+venue[i].id).click(function(){
+						photo(venue[i].id);
+					});
 				}
 				
 			}
