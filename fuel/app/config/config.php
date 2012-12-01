@@ -33,5 +33,5 @@ return array(
 			'sq4hack'
 		)
         ),
-		'base_url'  => 'foursquare',
+		'base_url'  => '/foursquare/',
 );
