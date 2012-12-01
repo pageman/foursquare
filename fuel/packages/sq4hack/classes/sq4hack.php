@@ -15,6 +15,25 @@ class sq4hack {
     private static $url  = 'https://api.foursquare.com/v2/';
     private static $auth; 
     
+    public static function puke_group_photos($id){
+        $places_photos      = self::puke_venue_photos($id);
+        $places             = json_decode($places_photos);
+        $photos             = $places->response->photos->items;
+        $photos_filtered    = array();
+        $c                  = 0;
+        
+        foreach ($photos as $photo):
+            $photos_filtered[$c]['url'] = 'https://is1.4sqi.net/pix/'.$photo->suffix;
+            $c++;
+        endforeach;
+        return $photos_filtered;
+    }
+    
+    public static function puke_venue_photos($id) {
+        self::load_auth();
+        $uri = self::$url . 'venues/'.$id.'/photos'.self::$auth.'group=venue';
+        return self::rest_gen($uri);
+    }
     
     public static function puke_recommends($near) {
         $places_json    = self::puke_venue($near);
@@ -28,10 +47,9 @@ class sq4hack {
             $c++;
         endforeach;
         return $venues_filter;
-        //return $venue;
     }
 
-    public static function puke_venue($near = '11.8494,121.8862'){
+    public static function puke_venue($near){
         self::load_auth();
         $uri = self::$url . 'venues/explore' . self::$auth . "ll=$near";
         return self::rest_gen($uri);
