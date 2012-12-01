@@ -30,8 +30,8 @@ class sq4hack {
             $photos_filtered[$c]['height']      = $photo->height;
             $photos_filtered[$c]['width']       = $photo->width;
             $photos_filtered[$c]['firstName']   = trim($photo->user->firstName);
-            $photos_filtered[$c]['avatar']      = 'https://is1.4sqi.net/user/'.$photo->user->photo->suffix;
-            $photos_filtered[$c]['id']          = $photo->user->id;  
+            $photos_filtered[$c]['avatar']      = 'https://is0.4sqi.net/userpix_thumbs/'.$photo->user->photo->suffix;
+            $photos_filtered[$c]['id']          = $photo->user->id;   
             $c++;
         endforeach;
         return $photos_filtered;

@@ -4,6 +4,7 @@
 <pre>
     <?php 
         print_r($photos);
+        print Fuel\Core\Asset::img($photos[0]['avatar']);
     ?>
 </pre>
 <script>
