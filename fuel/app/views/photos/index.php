@@ -25,11 +25,21 @@
 
   <div id="container">
     <header>
-      <h1>jQuery Wookmark Plug-in API Example</h1>
-      <p>Scroll down to see more content loaded via the <a href="http://www.wookmark.com/about/api" target="_blank">Wookmark API</a>.</p>
     </header>
     <div id="main" role="main">
+	<div>
+		<form>
 
+			<input type="text" placeholder="Full name" style='width:80%;'>
+			<a class="button-main" value='Search' style='height:30px'>Search</a>
+
+		</form>
+		
+		<?php 
+		
+		?>
+		
+	</div>
       <ul id="tiles">
         <!-- These is where we place content loaded from the Wookmark API -->
       </ul>
@@ -50,8 +60,8 @@
  echo \Fuel\Core\Asset::js('jquery.wookmark.js');
  echo \Fuel\Core\Asset::css('reset.css');
  echo \Fuel\Core\Asset::css('style.css');
+ echo \Fuel\Core\Asset::css('ratchet.css');
 
-	
   ?>
 
   
