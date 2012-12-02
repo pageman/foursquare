@@ -26,7 +26,7 @@
   <div id="container">
     <header>
     </header>
-    <div id="main" role="main">
+    <div class="content" role="main">
 	<div>
 		<form>
 
