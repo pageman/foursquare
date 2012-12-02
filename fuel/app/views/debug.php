@@ -1,9 +1,10 @@
 <?php 
-    $venue = sq4hack\sq4hack::puke_recommends('11.8494,121.8862');
+    $venue = sq4hack\sq4hack::puke_recommends('14.558294,121.0185087');
+    $venue_photos = sq4hack\sq4hack::puke_group_photos('43695300f964a5208c291fe3');
 ?>
 <pre>
     <?php 
-        print_r($venue);
+        print_r($venue_photos);
     ?>
 </pre>
 <script>
