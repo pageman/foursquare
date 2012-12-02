@@ -32,14 +32,16 @@
 		<div class="content" role="main">
 		<div>
 		
+		<?php
 		
+		?>
 		<div class="btn-toolbar" style="margin:0;">
               <div class="btn-group">
                 <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
-					<ul class="dropdown-menu">
-					<li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else here</a></li>
+					<ul class="dropdown-menu" id="venueList">
+					<!-- li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li -->
+					<li></li>
 					<!-- <li class="divider"></li>-->
 					<!-- <li><a href="#">Separated link</a></li>-->
 					</ul>
@@ -69,7 +71,55 @@
 
   <!-- include jQuery -->
  
-
+  <script type='text/javascript'>
+  var lat;
+  var lng;
+  
+  // get lat,lng using HTML5 GeoLocation API
+  $(document).ready(function(){
+	
+	
+	if (navigator.geolocation)
+	{
+		navigator.geolocation.getCurrentPosition(showPosition);
+	}
+	else
+	{
+		x.innerHTML="Geolocation is not supported by this browser.";
+	}
+	
+	function showPosition(position)
+	{
+		lat = position.coords.latitude
+		lng = position.coords.longitude
+		
+		$.ajax({
+			type: "POST",
+			data: "latitude="+lat+"&longitude="+lng,
+			url: "/ajax/venues/recomends",
+			success: function(data){
+				console.log(data);
+				
+				// encode to JS object
+				venue =	JSON.parse(data)
+				//console.log(venue)
+				
+				// put JS object to Dropdown list
+				for(var i in venue){
+					
+					$('#venueList').append('<li><a href="#	">'+venue[i].name+'</a></li>');
+				}
+				
+			}
+		
+		});
+		
+	}
+	
+  });
+  
+		
+  </script>
   
   <!-- Once the page is loaded, initalize the plug-in. -->
   <script type="text/javascript">
