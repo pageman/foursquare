@@ -39,11 +39,9 @@
               <div class="btn-group">
                 <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
 					<ul class="dropdown-menu" id="venueList">
-					<!-- li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li -->
-					<li></li>
-					<!-- <li class="divider"></li>-->
-					<!-- <li><a href="#">Separated link</a></li>-->
+
+					<!-- li><a href="#">Action</a></li-->
+					<!-- li><a href="javascript:void()" onClick="photo('bbb')">aaaa</a></li -->
 					</ul>
 				<!--<a class="btn btn-primary" value='Search' style='height:20px;'>Search</a>-->
               </div><!-- /btn-group -->
@@ -58,9 +56,13 @@
         <!-- These is where we place content loaded from the Wookmark API -->
       </ul>
 
-      <div id="loader">
+    <!--  <div id="loader">
         <div id="loaderCircle"></div>
-      </div>
+      </div>-->
+	  
+	  <div id="photo">
+		<div id="photolist"></div>
+	  </div>
     
     </div>
       
@@ -75,9 +77,37 @@
   var lat;
   var lng;
   
+	function photo(venue_id){
+		console.log(venue_id);
+		
+		$.ajax({
+			type: "POST",
+			data: "venue_id="+venue_id,
+			url: "/ajax/venues/photos",
+			success: function(data){
+				console.log(data);
+				
+				// encode to JS object
+				var photos =	JSON.parse(data)
+				
+				// show the photos
+				
+				for(var i in photos){
+				
+				console.log(photos[i].url)
+				//$('#photolist').append('<li><img src='+photos[i].url+' width="200" ></img></li>')
+				//	$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
+			
+				}
+				
+			}
+		});	
+	}
+	
+  
+  
   // get lat,lng using HTML5 GeoLocation API
   $(document).ready(function(){
-	
 	
 	if (navigator.geolocation)
 	{
@@ -106,15 +136,16 @@
 				
 				// put JS object to Dropdown list
 				for(var i in venue){
-					
-					$('#venueList').append('<li><a href="#	">'+venue[i].name+'</a></li>');
+					//$('#venueList').append('<li><a href="#	">'+venue[i].name+'</a></li>');
+					$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
+		//			$('#venueList').append('<li><a href="#" onclick="displayPhotos('+venue[i].id+')"></a></li>');
+		
 				}
 				
 			}
-		
-		});
-		
+		});	
 	}
+	
 	
   });
   
@@ -215,62 +246,15 @@
       $(document).bind('scroll', onScroll);
       
       // Load first data from the API.
-      loadData();
+     // loadData();
     });
   </script>
-  
-  <?php /* ?>
-   <script>
-    $(function() {
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
-        $("#tags").autocomplete({
-            source: availableTags
-        });
-    });
-    </script>
-    <?php */ ?>
+
 	
    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
     <script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
 	
-	
-    <!-- script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-typeahead.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
-    <script src="http://twitter.github.com/bootstrap/assets/js/application.js"></script -->
 </body>
 </html>
