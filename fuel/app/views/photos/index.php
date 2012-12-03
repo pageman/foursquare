@@ -56,9 +56,9 @@
         <!-- These is where we place content loaded from the Wookmark API -->
       </ul>
 
-    <!--  <div id="loader">
+      <div id="loader">
         <div id="loaderCircle"></div>
-      </div>-->
+      </div>
 	  
 	  <div id="photo">
 		<div id="photolist"></div>
@@ -82,7 +82,7 @@
 		
 		$.ajax({
 			type: "POST",
-			data: "venue_id="+venue_id,
+			data: "id="+venue_id,
 			url: "/ajax/venues/photos",
 			success: function(data){
 				console.log(data);
@@ -92,14 +92,18 @@
 				
 				// show the photos
 				
+				var html = "";
 				for(var i in photos){
 				
-				console.log(photos[i].url)
-				//$('#photolist').append('<li><img src='+photos[i].url+' width="200" ></img></li>')
-				//	$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
-			
+					console.log(photos[i].url);
+					html += '<li><img src='+photos[i].url+' width="200" height="269"></img></li>';
 				}
 				
+				// Add image HTML to the page.
+				$('#tiles').append(html);
+				
+				// Apply layout.
+				applyLayout();
 			}
 		});	
 	}
@@ -125,7 +129,7 @@
 		
 		$.ajax({
 			type: "POST",
-			data: "latitude="+lat+"&longitude="+lng,
+			data: "lat="+lat+"&lng="+lng,
 			url: "/ajax/venues/recomends",
 			success: function(data){
 				console.log(data);
@@ -136,9 +140,7 @@
 				
 				// put JS object to Dropdown list
 				for(var i in venue){
-					//$('#venueList').append('<li><a href="#	">'+venue[i].name+'</a></li>');
 					$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
-		//			$('#venueList').append('<li><a href="#" onclick="displayPhotos('+venue[i].id+')"></a></li>');
 		
 				}
 				
@@ -176,7 +178,7 @@
         // Check if we're within 100 pixels of the bottom edge of the broser window.
         var closeToBottom = ($(window).scrollTop() + $(window).height() > $(document).height() - 100);
         if(closeToBottom) {
-          loadData();
+          //loadData();
         }
       }
     };
@@ -246,7 +248,7 @@
       $(document).bind('scroll', onScroll);
       
       // Load first data from the API.
-     // loadData();
+      loadData();
     });
   </script>
 
