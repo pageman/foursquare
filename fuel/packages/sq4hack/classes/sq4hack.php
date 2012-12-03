@@ -15,6 +15,10 @@ class sq4hack {
     private static $url  = 'https://api.foursquare.com/v2/';
     private static $auth; 
     
+    public static function puke_checkin_details () {
+        
+    }
+    
     public static function puke_group_photos($id){
         $places_photos      = self::puke_venue_photos($id);
         $places             = json_decode($places_photos);
