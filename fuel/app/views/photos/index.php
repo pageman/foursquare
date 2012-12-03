@@ -26,8 +26,8 @@
   
 </head>
 
+<body>
 
-	
 		<div id="container">
 		<div class="content" role="main">
 		<div>
@@ -37,7 +37,7 @@
 		?>
 		<div class="btn-toolbar" style="margin:0;">
               <div class="btn-group">
-                <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown"> Choose Nearby Location <span class="caret"></span></button>
 					<ul class="dropdown-menu" id="venueList">
 				
 					<!-- li><a href="#">Action</a></li-->
@@ -78,7 +78,9 @@
   <!-- include jQuery -->
  
   <script type='text/javascript'>
-//$(document).ready(function(){  
+	  $('body')
+		  .on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); })
+		  .on('touchstart.dropdown', '.dropdown-submenu', function (e) { e.preventDefault(); });
   var lat;
   var lng;
  $(document).ready()
@@ -88,6 +90,7 @@
 	function photo(venue_id){
 	
 		//ajax loading call
+		
 			$('#loading').html('<img src=../assets/img/loading.gif>')
 		//
 	
@@ -110,13 +113,14 @@
 				for(var i in photos){
 				
 					console.log(photos[i].url);
-					html += '<li><img src='+photos[i].url+' width="200" height="269"></img></li>';
+					height = Math.round(photos[i].height/photos[i].width*200);
+					html += '<li><img src='+photos[i].url+' width="200" height="'+height+'"></img></li>';
 					//html += "<li>"+photos[i].name+"</li>";
+					
 					console.log(photos[i].name)					
 				}
 				
-				
-				
+
 				// Add image HTML to the page.
 				$('#tiles').append(html);
 				
@@ -153,6 +157,11 @@
 				
 				// put JS object to Dropdown list
 				for(var i in venue){
+					//$('#venueList').append('<li><a href="javascript:void()" id="'+venue[i].id+'">'+venue[i].name+'</a></li>');
+					
+					//$('#'+venue[i].id).click(function(){
+					//	photo(venue[i].id);
+					//});
 					$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
 			
 				}
