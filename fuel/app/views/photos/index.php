@@ -26,8 +26,8 @@
   
 </head>
 
-<body>
 
+	
 		<div id="container">
 		<div class="content" role="main">
 		<div>
@@ -39,7 +39,7 @@
               <div class="btn-group">
                 <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
 					<ul class="dropdown-menu" id="venueList">
-
+				
 					<!-- li><a href="#">Action</a></li-->
 					<!-- li><a href="javascript:void()" onClick="photo('bbb')">aaaa</a></li -->
 					</ul>
@@ -49,18 +49,22 @@
 			
 		</div>
 			<!--<input type="text" placeholder="location" style='width:80%;' id='tags'>-->
-			
+	
 		
-	</div>
+		</div>
       <ul id="tiles">
         <!-- These is where we place content loaded from the Wookmark API -->
       </ul>
+	  
 
       <div id="loader">
         <div id="loaderCircle"></div>
       </div>
 	  
 	  <div id="photo">
+		    <div id='loading' style='position:absolute;left:250px'>
+		
+			</div>
 		<div id="photolist"></div>
 	  </div>
     
@@ -74,10 +78,19 @@
   <!-- include jQuery -->
  
   <script type='text/javascript'>
+//$(document).ready(function(){  
   var lat;
   var lng;
-  
+ $(document).ready()
+ {
+	$('#loading').html('<img src=../assets/img/loading.gif>')
+ } 
 	function photo(venue_id){
+	
+		//ajax loading call
+			$('#loading').html('<img src=../assets/img/loading.gif>')
+		//
+	
 		$('#tiles').children("li").remove();
 		console.log(venue_id);
 		
@@ -99,8 +112,10 @@
 					console.log(photos[i].url);
 					html += '<li><img src='+photos[i].url+' width="200" height="269"></img></li>';
 					//html += "<li>"+photos[i].name+"</li>";
-console.log(photos[i].name)					
+					console.log(photos[i].name)					
 				}
+				
+				
 				
 				// Add image HTML to the page.
 				$('#tiles').append(html);
@@ -108,13 +123,8 @@ console.log(photos[i].name)
 				// Apply layout.
 				applyLayout();
 			}
-		});	
+		});		
 	}
-	
-  
-  
-  // get lat,lng using HTML5 GeoLocation API
-  $(document).ready(function(){
 	
 	if (navigator.geolocation)
 	{
@@ -146,13 +156,15 @@ console.log(photos[i].name)
 					$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
 			
 				}
-				
+				$('#loading').empty();
 			}
 		});	
 	}
-	
-	
-  });
+//})	
+
+
+ 
+
   
 		
   </script>
@@ -253,6 +265,8 @@ console.log(photos[i].name)
       // Load first data from the API.
      // loadData();
     });
+	
+	
   </script>
 
 	
