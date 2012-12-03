@@ -78,6 +78,7 @@
   var lng;
   
 	function photo(venue_id){
+		$('#tiles').children("li").remove();
 		console.log(venue_id);
 		
 		$.ajax({
@@ -97,6 +98,8 @@
 				
 					console.log(photos[i].url);
 					html += '<li><img src='+photos[i].url+' width="200" height="269"></img></li>';
+					//html += "<li>"+photos[i].name+"</li>";
+console.log(photos[i].name)					
 				}
 				
 				// Add image HTML to the page.
@@ -141,7 +144,7 @@
 				// put JS object to Dropdown list
 				for(var i in venue){
 					$('#venueList').append('<li><a href="javascript:void()" onClick="'+"photo('"+venue[i].id+"')"+'">'+venue[i].name+'</a></li>');
-		
+			
 				}
 				
 			}
@@ -248,7 +251,7 @@
       $(document).bind('scroll', onScroll);
       
       // Load first data from the API.
-      loadData();
+     // loadData();
     });
   </script>
 
